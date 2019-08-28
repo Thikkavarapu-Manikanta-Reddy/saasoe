@@ -1,0 +1,88 @@
+body
+{
+	background-image: url("../images/undraw_exams_g4ow.svg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background: auto;
+}
+h1
+{
+  margin-top: 100px;
+	font-size: 60px;
+  color: #DB4437;
+}
+label
+{
+  margin-bottom: 15px;
+  display: block;
+  font-size: 25px;
+  color: #0F9D58;
+}
+input
+{
+  margin-bottom: 15px;
+  display: block;
+  text-align: center;
+  text-decoration-style: italic;
+}
+.Form
+{
+  align-items: center;
+  margin-top: 100px;
+  margin-left: 500px;
+}
+.Text
+{
+  width: 32%;
+  border-radius: 3px;
+}
+.Div
+{
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  margin-top: 130px;
+}
+
+.Div2
+{
+  align-items: center;
+}
+.Button
+{
+  background-color: #4285F4;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin-bottom: 16px;
+  width: 300px;
+  border-radius: 5px;
+}
+
+.Button:hover
+{
+  cursor: pointer;
+}
+.Button2
+{
+  background-color: #4285F4;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin-right: 16px;
+  border-radius: 5px;
+
+}
+
+.Button2:hover
+{
+  cursor: pointer;
+}
