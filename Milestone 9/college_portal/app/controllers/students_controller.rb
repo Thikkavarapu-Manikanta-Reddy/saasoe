@@ -1,42 +1,48 @@
 class StudentsController < ApplicationController
-
   before_action :authenticate_user!
 
   def index
-    if (params[:department_id] && params[:section_id] && params[:id])
-      @student = Student.find(params[:id])
-      @section = Section.find(params[:section_id])
-      @department = Department.find(params[:department_id])
-      render "show"
-    elsif (params[:department_id] && params[:section_id])
-      @students = Student.where(department_id: params[:department_id], section_id: params[:section_id]).all
+    if params[:section_id]
+      @students = Student.where(section_id: params[:section_id]).all
     else
       @students = Student.all
     end
   end
 
   def new
+    unless current_user.admin?
+      flash[:danger] = "You are not allowed to access this page."
+      redirect_to root_path
+    end
     @student = Student.new
-    @section_collection = Section.all.collect { |p| [p.name, p.id, p.department_id] }
     @department_collection = Department.all.collect { |p| [p.name, p.id] }
+    @section_collection = Section.all.collect { |p| [p.name, p.id] }
   end
 
   def create
+    unless current_user.admin?
+      flash[:danger] = "You are not allowed to access this page."
+      redirect_to root_path
+    end
     @student = Student.new(student_params)
+    @department_collection = Department.all.collect { |p| [p.name, p.id] }
+    @section_collection = Section.all.collect { |p| [p.name, p.id] }
+
     if @student.save
       redirect_to action: "index"
     else
-      flash[:danger] = @student.errors.values.join(", ")
-      render "new"
+      flash.now[:danger] = @student.errors.values.join(", ")
+      render action: "new"
     end
   end
 
   def show
+    @student = Student.find(params[:id])
   end
 
   private
 
   def student_params
-    params[:student].permit(:name, :email, :roll_no, :section_id, :department_id, :id)
+    params[:student].permit(:name, :department_id, :section_id, :email)
   end
 end

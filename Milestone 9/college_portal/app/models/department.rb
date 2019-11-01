@@ -1,18 +1,15 @@
 class Department < ApplicationRecord
-
-  #associations
   has_many :sections, dependent: :destroy
-  has_many :students, :through => :sections, dependent: :destroy
+  has_many :students, dependent: :destroy
 
   # validations
-  validates :name, presence: true, uniqueness: true
-
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
   #callbacks
-  before_save :convert_name_to_caps
+  before_create :upcase_department
 
   private
 
-  def convert_name_to_caps
-    name.upcase!
+  def upcase_department
+    self.name.upcase!
   end
 end

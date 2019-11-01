@@ -69,6 +69,19 @@ class StudentTest < ActiveSupport::TestCase
     assert_equal student.errors[:department_id], ["can't be blank"]
   end
 
+  test 'Should fail duplicate students' do
+    sect = Section.new name: 'A'
+    dept = Department.new name: 'MECH'
+    dept.save
+    sect.department = dept
+    sect.save
+    student = Student.new name: 'FW', department_id: dept.id, section_id: sect.id
+    student.save
+    duplicate_student = Student.new name: 'FW', department_id: dept.id, section_id: sect.id
+    refute duplicate_student.save
+    assert_equal duplicate_student.errors[:name], ['has already been taken']
+  end
+
   test 'Should fail students for bad section and department_id' do
     student = Student.new name: 'fw', department_id: 1, section_id: 1
     refute student.save
@@ -83,6 +96,7 @@ class StudentTest < ActiveSupport::TestCase
     sect.department = dept
     sect.save
     student = Student.new name: 'fw', department_id: dept.id, section_id: sect.id
+    # byebug
     student.save
     assert_equal "#{dept.name.downcase}-#{sect.name.downcase}-#{Student.all.size}",
                  student.roll_no

@@ -1,19 +1,17 @@
 class Section < ApplicationRecord
-
-  #associations
   belongs_to :department
   has_many :students, dependent: :destroy
 
   #validations
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true
   validates :department_id, presence: true
 
   #callbacks
-  before_save :convert_name_to_caps
+  before_create :upcase_section
 
   private
 
-  def convert_name_to_caps
-    name.upcase!
+  def upcase_section
+    self.name.upcase!
   end
 end
